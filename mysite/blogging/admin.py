@@ -4,7 +4,6 @@ from blogging.models import Post, Category
 
 class CategoryAdmin(admin.ModelAdmin):
     exclude = ('posts',)
-    pass
 
 
 class CategoryInline(admin.TabularInline):
