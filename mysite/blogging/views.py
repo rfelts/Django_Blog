@@ -5,7 +5,9 @@ from blogging.models import Post, Category
 from rest_framework import viewsets
 from blogging.serializers import PostSerializer, CategorySerializer
 
+
 def stub_view(request, *args, **kwargs):
+    print("IN STUB VIEW")
     body = "Stub View\n\n"
     if args:
         body += "Args:\n"
@@ -17,12 +19,15 @@ def stub_view(request, *args, **kwargs):
 
 
 def list_view(request):
+    print("IN LIST VIEW")
     published = Post.objects.exclude(published_date__exact=None)
     posts = published.order_by('-published_date')
     context = {'posts': posts}
     return render(request, 'blogging/list.html', context)
 
+
 def detail_view(request, post_id):
+    print("IN DETAIL VIEW")
     published = Post.objects.exclude(published_date__exact=None)
     try:
         post = published.get(pk=post_id)
@@ -30,6 +35,7 @@ def detail_view(request, post_id):
         raise Http404
     context = {'post': post}
     return render(request, 'blogging/detail.html', context)
+
 
 class PostViewSet(viewsets.ModelViewSet):
     """
@@ -45,4 +51,3 @@ class CateoryViewSet(viewsets.ModelViewSet):
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-
